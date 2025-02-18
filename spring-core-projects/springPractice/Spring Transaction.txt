@@ -1,0 +1,40 @@
+### 1. PROPAGATION_REQUIRED (Default)
+- Explanation: Uses an existing transaction or starts a new one if none exists.
+- Example: Method A has a transaction, Method B inside it will use the same transaction or start a new one if no transaction exists.
+
+### 2. PROPAGATION_REQUIRES_NEW
+- Explanation: Always starts a new transaction, even if another transaction is running. The existing transaction is suspended.
+- Example: Method A has a transaction, Method B creates its own transaction while suspending A’s.
+
+### 3. PROPAGATION_SUPPORTS
+- Explanation: Uses the existing transaction if present, otherwise no transaction.
+- Example: Method A has a transaction, Method B uses it. If no transaction in A, B runs without any transaction.
+
+### 4. PROPAGATION_MANDATORY
+- Explanation: Requires an existing transaction. Throws an exception if no transaction is present.
+- Example: Method A has a transaction, Method B needs one too. If A has no transaction, B throws an exception.
+
+### 5. PROPAGATION_NOT_SUPPORTED
+- Explanation: Suspends the existing transaction and runs without a transaction.
+- Example: Method A has a transaction, Method B runs without one, suspending A's transaction.
+
+### 6. PROPAGATION_NEVER
+- Explanation: Throws an exception if a transaction is running. Method should not run within a transaction.
+- Example: Method A has a transaction, Method B throws an exception because it can't run with one.
+
+### 7. PROPAGATION_NESTED
+- Explanation: Creates a nested transaction inside the current one. If the parent commits, the nested transaction can commit too.
+- Example: Method A has a transaction, Method B runs inside it. If A commits, B can commit independently.
+
+
+### Summary Table:
+
+| Propagation Type              | Behavior                                                            |
+|------------------------------ |---------------------------------------------------------------------|
+| PROPAGATION_REQUIRED          | Use existing transaction or start a new one.                        |
+| PROPAGATION_REQUIRES_NEW      | Always start a new transaction, suspending any existing one.        |
+| PROPAGATION_SUPPORTS          | Use existing transaction if present; otherwise, no transaction.     |
+| PROPAGATION_MANDATORY         | Transaction must exist; throws exception if not.                    |
+| PROPAGATION_NOT_SUPPORTED     | Suspend existing transaction and do not start a new one.            |
+| PROPAGATION_NEVER             | A transaction should never exist; throws exception if one exists.   |
+| PROPAGATION_NESTED            | Start a nested transaction, can commit or rollback independently.   |
